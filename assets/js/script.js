@@ -1,5 +1,3 @@
-
-
 //header
 var header = document.createElement("header")
 header.setAttribute("style", "display: flex; justify-content: space-between; width: 100%")
@@ -13,6 +11,33 @@ header.appendChild(highScore)
 highScore.addEventListener('click',function(event){
     highScoreScreen()
 })
+
+function highScoreScreen(){
+    heading.textContent="Highscores"
+
+    intro.remove()
+    startBut.remove()
+    
+    var line = document.createElement("p")
+    line.setAttribute("style","font-size: 12px; background-color: violet")
+    line.textContent = localStorage.getItem("initials") + " - " + localStorage.getItem("finalResult")
+    heading.appendChild(line)
+
+    var back = document.createElement("button")
+    back.textContent = "Back"
+    heading.appendChild(back);
+    back.addEventListener('click', function(event){
+        location.reload()
+    })
+
+    var clear = document.createElement("button")
+    clear.textContent = "Clear Highscores"
+    heading.appendChild(clear);
+    clear.addEventListener('click',function(event){
+        line.textContent = ""
+    })
+}
+
 
 
 //timer
@@ -46,6 +71,9 @@ quizContainer.appendChild(startBut);
 //answers in column
 var answers = document.createElement("ul")
 answers.setAttribute("style","display: flex; flex-direction: column;")
+  var Mes = document.createElement("div")
+  Mes.setAttribute("style","color:gray; border-top: solid 2px gray; text-align: center; width: 100%")
+  
 
 startBut.addEventListener('click', function (event){
         
@@ -59,15 +87,19 @@ startBut.addEventListener('click', function (event){
       intro.remove();
       startBut.remove();
 
+
 function correct(){
     secondsLeft=secondsLeft+10;
     timer.textContent=secondsLeft + " s";
-    return;
+    Mes.textContent ="Correct! +10s!"
+    
 }
 function wrong(){
     secondsLeft=secondsLeft-10;
     timer.textContent=secondsLeft + " s";
-    return;
+    Mes.textContent ="Wrong -10s!"
+
+    
 }
 
 
@@ -108,6 +140,7 @@ function question1(){
     answers.appendChild(li4);
     answers.addEventListener('click',function(event){
     question2();
+    quizContainer.appendChild(Mes)
     li1.remove();
     li2.remove();
     li3.remove();
@@ -151,6 +184,7 @@ function question2(){
         li2.remove();
         li3.remove();
         li4.remove();
+        quizContainer.appendChild(Mes)
     },{once:true})
   }
 
@@ -185,6 +219,7 @@ function question3(){
       answers.appendChild(li3);
       answers.appendChild(li4);
       answers.addEventListener('click',function(event){
+        quizContainer.appendChild(Mes)
         question4();
         li1.remove();
         li2.remove();
@@ -224,6 +259,7 @@ function question4(){
       answers.appendChild(li3);
       answers.appendChild(li4);
       answers.addEventListener('click',function(event){
+        quizContainer.appendChild(Mes)
         question5();
         li1.remove();
         li2.remove();
@@ -263,6 +299,7 @@ function question5(){
       answers.appendChild(li3);
       answers.appendChild(li4);
       answers.addEventListener('click',function(event){
+        quizContainer.appendChild(Mes)
         li1.remove();
         li2.remove();
         li3.remove();
@@ -273,6 +310,7 @@ function question5(){
     },{once:true})
   }
   
+
   function resultScreen(){
     heading.textContent = "All Done!"
   
@@ -301,24 +339,14 @@ function question5(){
     event.preventDefault();
     localStorage.setItem("initials", initials.value)
     localStorage.setItem("finalResult", secondsLeft)
-  
-  
-    function highScoreScreen(){
-        result.remove();
-        enterInitials.remove();
-        initials.remove();
-        heading.textContent="Highscores"
-        
-        var line = document.createElement("p")
-        line.setAttribute("style","font-size: 12px; background-color: violet")
-        line.textContent = localStorage.getItem("initials") + " " + localStorage.getItem("finalResult")
-        heading.appendChild(line)
-    }
-    
+
+    Mes.remove()  
     highScoreScreen()
   
     })
     
   }
+
+  
 })
 
